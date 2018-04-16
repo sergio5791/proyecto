@@ -1,15 +1,23 @@
 package pl;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 
 import dl.Usuario;
 
 @Named
 @RequestScoped
-public class ManagedUsuario {
+public class ManagedUsuario implements Serializable{
 
-	private Usuario user;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Usuario user=new Usuario();
 
 	public String getNombre() {
 		return user.getNombre();
@@ -22,7 +30,7 @@ public class ManagedUsuario {
 	public String getApellido() {
 		return user.getApellido();
 	}
-//Esto es una prueba
+
 	public void setApellido(String apellido) {
 		user.setApellido(apellido);
 	}
@@ -42,7 +50,15 @@ public class ManagedUsuario {
 	public void setPassword(String password) {
 		user.setPassword(password);
 	}
-	
+	public void addUser(){
+		
+		ClientBuilder.newClient()
+		.target("http://localhost:8080/TAP/rest/servicio/")
+		.path("anadir")
+		.request()
+		.post(Entity.json(user));
+		
+	}
 	
 	
 }
