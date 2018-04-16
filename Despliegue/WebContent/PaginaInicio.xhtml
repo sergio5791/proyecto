@@ -13,17 +13,18 @@
 <h1>Bienvenido a moto taxi</h1>
 
 <h:form>
+
 <h:outputText value="Introduce el nombre del usuario"/><br />
-<h:inputTextarea value="#{managedUsuario.nombre}" id="name" required="true" requiredMessage="ERROR introduce el nombre" />
+<h:inputText value="#{managedUsuario.nombre}" id="name" required="true" requiredMessage="ERROR introduce el nombre" />
 <h:message for="name" style="color:red"/>
 
 
 <h:outputText value="Introduce el apellido del usuario"/><br />
-<h:inputTextarea value="#{managedUsuario.apellido}" id="lastname" required="true" requiredMessage="ERROR introduce el apellido" />
+<h:inputText value="#{managedUsuario.apellido}" id="lastname" required="true" requiredMessage="ERROR introduce el apellido" />
 <h:message for="lastname" style="color:red"/>
 
 <h:outputText value="Introduce el correo del usuario"/><br />
-<h:inputTextarea value="#{managedUsuario.correo}" id="mail" required="true" requiredMessage="ERROR introduce el correo" />
+<h:inputText value="#{managedUsuario.correo}" id="mail" required="true" requiredMessage="ERROR introduce el correo" />
 <h:message for="mail" style="color:red"/>
 
 <h:outputText value="Introduce la contraseña del usuario"/><br />
@@ -33,6 +34,7 @@
 
 <h:commandButton action="#{managedUsuario.addUser()}" value="Enviar" />
 <h:commandButton type="reset" value="Reset" />
+
 </h:form>
 </h:body> 
 </html>

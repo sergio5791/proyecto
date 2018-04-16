@@ -11,7 +11,6 @@ import dl.Usuario;
 @Path("/servicio")
 public class ServicioRest {
 
-	
 	@Path("anadir")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

@@ -11,13 +11,13 @@ import dl.Usuario;
 
 @Named
 @RequestScoped
-public class ManagedUsuario implements Serializable{
+public class ManagedUsuario implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Usuario user=new Usuario();
+	private Usuario user = new Usuario();
 
 	public String getNombre() {
 		return user.getNombre();
@@ -28,6 +28,7 @@ public class ManagedUsuario implements Serializable{
 	}
 
 	public String getApellido() {
+
 		return user.getApellido();
 	}
 
@@ -50,15 +51,16 @@ public class ManagedUsuario implements Serializable{
 	public void setPassword(String password) {
 		user.setPassword(password);
 	}
-	public void addUser(){
-		
-		ClientBuilder.newClient()
+
+	public void addUser() {
+
+		ClientBuilder
+		.newClient()
 		.target("http://localhost:8080/TAP/rest/servicio/")
 		.path("anadir")
 		.request()
 		.post(Entity.json(user));
-		
+
 	}
-	
-	
+
 }
