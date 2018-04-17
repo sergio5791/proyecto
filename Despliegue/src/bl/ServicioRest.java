@@ -19,7 +19,6 @@ public class ServicioRest {
 		EscribirXML escribir= new EscribirXML();
 		escribir.EscribirFichero(user);
 		
-	}
-	
+	}	
 	
 }

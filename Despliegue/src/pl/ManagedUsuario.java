@@ -7,6 +7,8 @@ import javax.inject.Named;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 
+import dl.LeerFicheroXML;
+import dl.ListaUsuarios;
 import dl.Usuario;
 
 @Named
@@ -16,6 +18,8 @@ public class ManagedUsuario implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Usuario cliente = new Usuario();
+	private boolean checkInsert=false;
+	private boolean checkCopy=false;
 	
 	
 	public String getNombre() {
@@ -45,15 +49,43 @@ public class ManagedUsuario implements Serializable{
 	
 	public void add(){
 		
+		if(buscaUsuario()){
 		ClientBuilder
 		.newClient()
 		.target("http://localhost:8080/TAP/rest/servicio/")
 		.path("anadir")
 		.request()
-		.post(Entity.json(cliente));	
+		.post(Entity.json(cliente));
+		this.checkInsert=true;
+		}else{
+			this.checkCopy=true;
+		}
+	}
+
+	public boolean buscaUsuario () {
+		
+			LeerFicheroXML leer =new LeerFicheroXML();
+			ListaUsuarios lista=new ListaUsuarios();
+			boolean check=true;
+			
+			lista.setLista(leer.leer().getLista());
+			
+			for (Usuario user : lista.getLista()) {
+				if(user.getCorreo().contentEquals(user.getCorreo())){
+					check=false;
+				}
+			}
+			return(check);
+	
 	}
 	
+	public boolean checkInsert(){
+		
+		return(this.checkInsert);
+	}
 	
-	
-	
+	public boolean checkCopy(){
+		
+		return(this.checkCopy);
+	}
 }
