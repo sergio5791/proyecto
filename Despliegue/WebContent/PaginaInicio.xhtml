@@ -1,40 +1,59 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-<title>Pagina de Inicio</title>
-<meta http-equiv="Content-Type" content="text/html" />
-</h:head> 
+	<title>Pagina de Inicio</title>
+	<meta http-equiv="Content-Type" content="text/html" />
+</h:head>
 
-<h:body> 
-<h1>Bienvenido a moto taxi</h1>
+<h:body>
+	<h1>Bienvenido a moto taxi</h1>
 
-<h:form>
+	<h:form>
 
-<h:outputText value="Introduce el nombre del usuario"/><br />
-<h:inputText value="#{managedUsuario.nombre}" id="name" required="true" requiredMessage="ERROR introduce el nombre" />
-<h:message for="name" style="color:red"/>
+		<h:outputText value="Introduce el nombre del usuario" />
+		<br />
+		<h:inputText value="#{managedUsuario.nombre}" id="name"
+			required="true" requiredMessage="ERROR introduce el nombre" />
+		<h:message for="name" />
 
+		<br />
+		<br />
 
-<h:outputText value="Introduce el apellido del usuario"/><br />
-<h:inputText value="#{managedUsuario.apellido}" id="lastname" required="true" requiredMessage="ERROR introduce el apellido" />
-<h:message for="lastname" style="color:red"/>
+		<h:outputText value="Introduce el apellido del usuario" />
+		<br />
+		<h:inputText value="#{managedUsuario.apellido}" id="lastname"
+			required="true" requiredMessage="ERROR introduce el apellido" />
+		<h:message for="lastname" style="color:red" />
 
-<h:outputText value="Introduce el correo del usuario"/><br />
-<h:inputText value="#{managedUsuario.correo}" id="mail" required="true" requiredMessage="ERROR introduce el correo" />
-<h:message for="mail" style="color:red"/>
+		<br />
+		<br />
 
-<h:outputText value="Introduce la contraseña del usuario"/><br />
-<h:inputSecret value="#{managedUsuario.password}" id="pass" required="true" requiredMessage="ERROR introduce la contraseña" />
-<h:message for="pass" style="color:red"/>
+		<h:outputText value="Introduce el correo del usuario" />
+		<br />
+		<h:inputText value="#{managedUsuario.correo}" id="mail"
+			required="true" requiredMessage="ERROR introduce el correo" />
+		<h:message for="mail" style="color:red" />
 
+		<br />
+		<br />
 
-<h:commandButton action="#{managedUsuario.addUser()}" value="Enviar" />
-<h:commandButton type="reset" value="Reset" />
+		<h:outputText value="Introduce la contraseña" />
+		<br />
+		<h:inputSecret value="#{managedUsuario.password}" id="pass"
+			maxlength="8" required="true"
+			requiredMessage="ERROR introduce la contraseña" />
+		<h:message for="pass" style="color:red" />
 
-</h:form>
-</h:body> 
+		<br />
+
+		<h:commandButton action="#{managedUsuario.add()}" value="Enviar" />
+		<h:commandButton type="reset" value="Reset" />
+
+	</h:form>
+</h:body>
+
 </html>

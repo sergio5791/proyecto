@@ -11,7 +11,7 @@ public class LeerFicheroXML implements LeerFichero{
 	@Override
 	public ListaUsuarios leer() {
 		// TODO Auto-generated method stub
-		File fichero=new File("/home/sergio/ListaUsuarios.xml");
+		File fichero=new File("/home/sergio/Escritorio/ListaUsuarios.xml");
 		ListaUsuarios lista= new ListaUsuarios();
 		
 		JAXBContext contexto;

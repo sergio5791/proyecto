@@ -11,56 +11,49 @@ import dl.Usuario;
 
 @Named
 @RequestScoped
-public class ManagedUsuario implements Serializable {
+public class ManagedUsuario implements Serializable{
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
-	private Usuario user = new Usuario();
-
+	private Usuario cliente = new Usuario();
+	
+	
 	public String getNombre() {
-		return user.getNombre();
+		return cliente.getNombre();
 	}
-
 	public void setNombre(String nombre) {
-		user.setNombre(nombre);
+		cliente.setNombre(nombre);
 	}
-
 	public String getApellido() {
-
-		return user.getApellido();
+		return cliente.getApellido();
 	}
-
 	public void setApellido(String apellido) {
-		user.setApellido(apellido);
+		cliente.setApellido(apellido);
 	}
-
 	public String getCorreo() {
-		return user.getCorreo();
+		return cliente.getCorreo();
 	}
-
 	public void setCorreo(String correo) {
-		user.setCorreo(correo);
+		cliente.setCorreo(correo);
 	}
-
 	public String getPassword() {
-		return user.getPassword();
+		return cliente.getPassword();
 	}
-
 	public void setPassword(String password) {
-		user.setPassword(password);
+		cliente.setPassword(password);
 	}
-
-	public void addUser() {
-
+	
+	public void add(){
+		
 		ClientBuilder
 		.newClient()
 		.target("http://localhost:8080/TAP/rest/servicio/")
 		.path("anadir")
 		.request()
-		.post(Entity.json(user));
-
+		.post(Entity.json(cliente));	
 	}
-
+	
+	
+	
+	
 }
