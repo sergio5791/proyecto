@@ -5,66 +5,42 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<title>Pagina de Inicio</title>
-	<meta http-equiv="Content-Type" content="text/html" />
+	<title>Pagina Inicio</title>
 	<h:outputStylesheet library="css" name="Estilo.css"></h:outputStylesheet>
+
 </h:head>
 
 <h:body>
-	<h1>Bienvenido a moto taxi</h1>
-
 	<h:form>
 
-		<h:outputText value="Introduce el nombre del usuario" />
+		<h:outputText value="Introduce el correo" />
 		<br />
-		<h:inputText value="#{managedUsuario.nombre}" id="name"
-			required="true" requiredMessage="ERROR introduce el nombre" />
-		<h:message for="name" />
-
-		<br />
-		<br />
-
-		<h:outputText value="Introduce el apellido del usuario" />
-		<br />
-		<h:inputText value="#{managedUsuario.apellido}" id="lastname"
-			required="true" requiredMessage="ERROR introduce el apellido"/>
-		<h:message for="lastname" style="color:red" />
-
-		<br />
-		<br />
-
-		<h:outputText value="Introduce el correo del usuario" />
-		<br />
-		<h:inputText value="#{managedUsuario.correo}" id="mail"
+		<h:inputText value="#{managedUsuario.correo}" id="correo"
 			required="true" requiredMessage="ERROR introduce el correo" />
-		<h:message for="mail" style="color:red" />
+		<h:message for="correo" style="color:red" />
 
 		<br />
 		<br />
 
 		<h:outputText value="Introduce la contraseña" />
 		<br />
+		
 		<h:inputSecret value="#{managedUsuario.password}" id="pass"
-			maxlength="8" required="true"
-			requiredMessage="ERROR introduce la contraseña" />
+			required="true" requiredMessage="ERROR introduce la contraseña" />
 		<h:message for="pass" style="color:red" />
 
 		<br />
 		<br />
+		<br />
 
-		<h:commandButton action="#{managedUsuario.add()}" value="Enviar" /><br />
+		<h:commandButton action="#{managedUsuario.checkRegistro()}" value="Enviar" />
 		<h:commandButton type="reset" value="Reset" />
-
 	</h:form>
-	
-	<h:panelGroup rendered="#{managedUsuario.checkCopy()}">
-	<h1>Ese correo ya esta insertado</h1>	
-	</h:panelGroup>
-	
-	<h:panelGroup rendered="#{managedUsuario.checkInsert()}">
-	<h1>Se ha insertado el Usuario correctamente</h1>
-	</h:panelGroup>
-	
-</h:body>
 
+
+	<h:form>
+		<h:commandButton action="PaginaRegistro" value="Registro" />
+	</h:form>
+
+</h:body>
 </html>
