@@ -16,6 +16,7 @@ public class ServicioRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void anadirUsuario (Usuario user){
 		
+		System.out.println("Llega al servicio REST");
 		EscribirXML escribir= new EscribirXML();
 		escribir.EscribirFichero(user);
 		
