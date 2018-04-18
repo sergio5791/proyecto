@@ -101,7 +101,7 @@ public class ManagedUsuario implements Serializable {
 
 		LeerFicheroXML leer = new LeerFicheroXML();
 		ListaUsuarios lista = new ListaUsuarios();
-		String check ="false";
+		String check ="PaginaInicio";
 
 		lista.setLista(leer.leer().getLista());
 
