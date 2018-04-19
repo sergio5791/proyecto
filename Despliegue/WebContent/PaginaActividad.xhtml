@@ -6,10 +6,30 @@
 
 <h:head>
 <title>Pagina Actividad</title>
+<h:outputStylesheet library="css" name="Estilo.css"></h:outputStylesheet>
 </h:head>
 
 <h:body>
-<h1>LLega a la pagina de actividad</h1>
-</h:body>
 
+
+<h:form>
+
+<h:outputText value="Introduce la longitud" />
+<h:inputText value="#{managedGoogleMaps.longitud}" />
+<br/>
+<br/>
+
+<h:outputText value="Introduce la latitud" />
+<h:inputText value="#{managedGoogleMaps.latitud}" />
+
+<br/>
+<br/>
+<h:commandLink action="PaginaActividad" value="Enviar" />
+<h:commandButton type="reset" value="Reset" />
+</h:form>
+<h:outputLink value="#{managedGoogleMaps.toString()}">Ver Mapa</h:outputLink>
+
+
+
+</h:body>
 </html>
