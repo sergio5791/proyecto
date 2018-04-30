@@ -1,49 +1,88 @@
 package dl;
 
 import java.io.Serializable;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.*;
 
 
-
-@XmlRootElement
-public class Usuario implements Serializable{
-
+/**
+ * The persistent class for the Usuarios database table.
+ * 
+ */
+@Entity
+@Table(name="Usuarios")
+@NamedQueries({
+@NamedQuery(name="BuscaCorreo", query="SELECT u.correo FROM Usuario u"),
+@NamedQuery(name="getLista", query="SELECT u FROM Usuario u"),
+})
+public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String nombre;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int idUsuarios;
+
 	private String apellido;
+
 	private String correo;
+
+	private String nombre;
+
 	private String password;
-	
-	@XmlElement
-	public String getNombre() {
-		return nombre;
+
+	//uni-directional many-to-one association to Using
+	@ManyToOne
+	@JoinColumn(name="Using_idUsing")
+	private Using using;
+
+	public Usuario() {
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+
+	public int getIdUsuarios() {
+		return this.idUsuarios;
 	}
-	@XmlElement
+
+	public void setIdUsuarios(int idUsuarios) {
+		this.idUsuarios = idUsuarios;
+	}
+
 	public String getApellido() {
-		return apellido;
+		return this.apellido;
 	}
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	@XmlElement
+
 	public String getCorreo() {
-		return correo;
+		return this.correo;
 	}
+
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	@XmlElement
-	public String getPassword() {
-		return password;
+
+	public String getNombre() {
+		return this.nombre;
 	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public Using getUsing() {
+		return this.using;
+	}
+
+	public void setUsing(Using using) {
+		this.using = using;
+	}
 
 }

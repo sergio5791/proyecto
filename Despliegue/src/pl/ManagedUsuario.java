@@ -2,13 +2,11 @@ package pl;
 
 import java.io.Serializable;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 
-import dl.LeerFicheroXML;
-import dl.ListaUsuarios;
+import bl.LogicaNegocio;
 import dl.Usuario;
 
 @Named
@@ -17,8 +15,9 @@ public class ManagedUsuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Usuario cliente = new Usuario();
-	private boolean checkInsert = false;
-	private boolean checkCopy = false;
+	@EJB
+	private LogicaNegocio logica;
+	//private boolean checkInsert = false;
 
 	public String getNombre() {
 		return cliente.getNombre();
@@ -54,64 +53,9 @@ public class ManagedUsuario implements Serializable {
 
 	public void add() {
 
-		if (buscaUsuario()) {
-			ClientBuilder.newClient().target("http://localhost:8080/TAP/rest/servicio/").path("anadir").request()
-					.post(Entity.json(cliente));
-			this.checkInsert = true;
-		} else {
-			this.checkCopy = true;
-		}
+			logica.anadirUsuario(cliente);
+			//this.checkInsert = true;
 	}
 
-	public boolean buscaUsuario() {
-
-		// El boolean esta puesto asi para renderizar la respuesta
-
-		LeerFicheroXML leer = new LeerFicheroXML();
-		ListaUsuarios lista = new ListaUsuarios();
-		boolean check = true;
-
-		lista.setLista(leer.leer().getLista());
-
-		for (Usuario user : lista.getLista()) {
-			if (user.getCorreo().contentEquals(this.cliente.getCorreo())) {
-				check = false;
-			}
-		}
-		return (check);
-
-	}
-
-	public boolean checkInsertCorreo() {
-		// Mira si se ha insertado el correo en el fichero
-		// Si esto se cumple se devuelve True
-		return (this.checkInsert);
-	}
-
-	public boolean checkCopyCorreo() {
-		// Mira si hay un correo igual en el fichero
-		// Si esto se cumple se devuelve True
-		return (this.checkCopy);
-	}
-
-	
-
-	public String checkRegistro() {
-		// Busca si el usuario y la contraseña estan en el fichero
-
-		LeerFicheroXML leer = new LeerFicheroXML();
-		ListaUsuarios lista = new ListaUsuarios();
-		String check ="PaginaInicio";
-
-		lista.setLista(leer.leer().getLista());
-
-		for (Usuario user : lista.getLista()) {
-			if (user.getCorreo().contentEquals(cliente.getCorreo()) && user.getPassword().contentEquals(cliente.getPassword())) {
-				check="PaginaActividad";
-			}
-		}
-
-		return(check);
-	}
 
 }
