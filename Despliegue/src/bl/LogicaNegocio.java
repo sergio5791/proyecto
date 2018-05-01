@@ -34,6 +34,7 @@ public class LogicaNegocio implements Serializable {
 	
 		}catch(NoResultException ex){
 			em.persist(user);
+			System.out.println("Se introduce el usuario");
 		}
 
 	}
