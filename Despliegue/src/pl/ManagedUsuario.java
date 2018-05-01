@@ -7,6 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import bl.LogicaNegocio;
+import dl.Using;
 import dl.Usuario;
 
 @Named
@@ -14,17 +15,25 @@ import dl.Usuario;
 public class ManagedUsuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Usuario cliente = new Usuario();
 	@EJB
 	private LogicaNegocio logica;
+	Usuario cliente = new Usuario();
+	
 	//private boolean checkInsert = false;
 
-	public String getNombre() {
-		return cliente.getNombre();
+
+
+	public void add() {
+			logica.anadirUsuario(cliente);
+			//this.checkInsert = true;
 	}
 
-	public void setNombre(String nombre) {
-		cliente.setNombre(nombre);
+	public int getIdUsuarios() {
+		return cliente.getIdUsuarios();
+	}
+
+	public void setIdUsuarios(int idUsuarios) {
+		cliente.setIdUsuarios(idUsuarios);
 	}
 
 	public String getApellido() {
@@ -35,6 +44,14 @@ public class ManagedUsuario implements Serializable {
 		cliente.setApellido(apellido);
 	}
 
+	public String getContrasena() {
+		return cliente.getContrasena();
+	}
+
+	public void setContrasena(String contrasena) {
+		cliente.setContrasena(contrasena);
+	}
+
 	public String getCorreo() {
 		return cliente.getCorreo();
 	}
@@ -43,19 +60,14 @@ public class ManagedUsuario implements Serializable {
 		cliente.setCorreo(correo);
 	}
 
-	public String getPassword() {
-		return cliente.getPassword();
+	public String getNombre() {
+		return cliente.getNombre();
 	}
 
-	public void setPassword(String password) {
-		cliente.setPassword(password);
+	public void setNombre(String nombre) {
+		cliente.setNombre(nombre);
 	}
 
-	public void add() {
-
-			logica.anadirUsuario(cliente);
-			//this.checkInsert = true;
-	}
-
+	
 
 }

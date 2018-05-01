@@ -1,66 +1,53 @@
 package bl;
 
-
-
+import java.io.Serializable;
 import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+import dl.Using;
 import dl.Usuario;
 
 @Stateless
 @LocalBean
-public class LogicaNegocio {
+public class LogicaNegocio implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@PersistenceContext
 	private EntityManager em;
-	
 
-	public void anadirUsuario (Usuario user){
+	public void anadirUsuario(Usuario user) {
 
-	List<Usuario> lista;
+		Usuario usuario;
 		
-	if(checkUser(user)==null){
-		em.persist(user);
-	}else{
-		lista=getListaDB();
-		for (int i = 0; i < lista.size(); i++) {
-			em.persist(lista.get(i));
+		try{
+			usuario = (Usuario) em.createNamedQuery("Usuario.Correo").setParameter("mail", user.getCorreo())
+					.getSingleResult();
+			if (usuario.getContrasena().equals(user.getCorreo())) {
+				System.out.println("Ya hay un correo identico");
+			} else {
+				System.out.println("Ya existe un correo igual");
+			}
+		}catch(NoResultException ex){
+			em.persist(user);
 		}
-		
+
 	}
-		
-		
-	}	
-	
-	public Usuario checkUser(Usuario user){
-		
-		Usuario usuario=(Usuario) em.createNamedQuery("BuscaCorreo")
-				.setParameter("correo",user.getCorreo()).getSingleResult();
-				
-		return usuario;
-		
-	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Usuario> getListaDB(){
-		
-		List<Usuario> lista= (List<Usuario>)em.createNamedQuery("getLista").getResultList();
-		
+	public List<Usuario> getListaDB() {
+
+		System.out.println("LLega al metodo que devuelve la Lista");
+		List<Usuario> lista = (List<Usuario>) em.createNamedQuery("getLista").getResultList();
+
 		return lista;
-		
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

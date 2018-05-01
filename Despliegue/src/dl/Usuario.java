@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="Usuarios")
 @NamedQueries({
-@NamedQuery(name="BuscaCorreo", query="SELECT u.correo FROM Usuario u"),
-@NamedQuery(name="getLista", query="SELECT u FROM Usuario u"),
+@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u"),
+@NamedQuery(name="Usuario.Correo" , query="SELECT u FROM Usuario u WHERE u.correo = :mail")
 })
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,16 +23,11 @@ public class Usuario implements Serializable {
 
 	private String apellido;
 
+	private String contrasena;
+
 	private String correo;
 
 	private String nombre;
-
-	private String password;
-
-	//uni-directional many-to-one association to Using
-	@ManyToOne
-	@JoinColumn(name="Using_idUsing")
-	private Using using;
 
 	public Usuario() {
 	}
@@ -53,6 +48,14 @@ public class Usuario implements Serializable {
 		this.apellido = apellido;
 	}
 
+	public String getContrasena() {
+		return this.contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
 	public String getCorreo() {
 		return this.correo;
 	}
@@ -67,22 +70,6 @@ public class Usuario implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Using getUsing() {
-		return this.using;
-	}
-
-	public void setUsing(Using using) {
-		this.using = using;
 	}
 
 }

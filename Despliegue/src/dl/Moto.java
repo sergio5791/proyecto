@@ -22,11 +22,6 @@ public class Moto implements Serializable {
 
 	private String longitud;
 
-	//uni-directional many-to-one association to Using
-	@ManyToOne
-	@JoinColumn(name="Using_idUsing")
-	private Using using;
-
 	public Moto() {
 	}
 
@@ -52,14 +47,6 @@ public class Moto implements Serializable {
 
 	public void setLongitud(String longitud) {
 		this.longitud = longitud;
-	}
-
-	public Using getUsing() {
-		return this.using;
-	}
-
-	public void setUsing(Using using) {
-		this.using = using;
 	}
 
 }
