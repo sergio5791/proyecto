@@ -29,25 +29,36 @@ public class LogicaNegocio implements Serializable {
 		try{
 			usuario = (Usuario) em.createNamedQuery("Usuario.Correo").setParameter("mail", user.getCorreo())
 					.getSingleResult();
-			if (usuario.getContrasena().equals(user.getCorreo())) {
+			if(usuario.getCorreo().equals(user.getCorreo()))
 				System.out.println("Ya hay un correo identico");
-			} else {
-				System.out.println("Ya existe un correo igual");
-			}
+	
 		}catch(NoResultException ex){
 			em.persist(user);
 		}
 
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Usuario> getListaDB() {
-
-		System.out.println("LLega al metodo que devuelve la Lista");
-		List<Usuario> lista = (List<Usuario>) em.createNamedQuery("getLista").getResultList();
-
-		return lista;
-
+	public void eliminarUsuario(Usuario user){
+		
+		//Si se quiere para ponerlo en una pagina de administrador
+		
 	}
 
+	public boolean checkUser(Usuario user){
+		
+		Usuario usuario;
+		Boolean check=false;
+		
+		try{
+			usuario = (Usuario) em.createNamedQuery("Usuario.Correo").setParameter("mail", user.getCorreo())
+					.getSingleResult();
+			if(usuario.getContrasena().equals(user.getContrasena()))
+				check=true;
+	
+		}catch(NoResultException ex){
+			System.out.println("No hay un usuario con ese correo");
+		}
+		return check;
+	}
+	
 }

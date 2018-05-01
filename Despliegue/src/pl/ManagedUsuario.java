@@ -27,6 +27,20 @@ public class ManagedUsuario implements Serializable {
 			logica.anadirUsuario(cliente);
 			//this.checkInsert = true;
 	}
+	
+	public String checkExistUser(){
+		
+		String destino=null;
+		
+		if(logica.checkUser(cliente))
+			destino="PaginaActividad";
+		
+		return destino;
+	}
+	
+	public void delete(){
+		logica.eliminarUsuario(cliente);
+	}
 
 	public int getIdUsuarios() {
 		return cliente.getIdUsuarios();
