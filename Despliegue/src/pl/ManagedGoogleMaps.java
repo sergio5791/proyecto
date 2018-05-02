@@ -2,9 +2,12 @@ package pl;
 
 
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import dl.GoogleMaps;
@@ -37,18 +40,18 @@ public class ManagedGoogleMaps implements Serializable{
 	public void setLongitud(String longitud) {
 		mapa.setLongitud(longitud);
 	}
-
-	public String toString() {
-		
+	
+	public void redirect() throws IOException {
+	    
 		StringBuilder str= new StringBuilder();
 		str.append("http://maps.google.com/maps?saddr=");
 		str.append(mapa.getLatitud()+",");
 		str.append(mapa.getLongitud());
 		str.append("&daddr=");
 		str.append("43.1301667,-2.5392527777776");//LA direccion que va con numero es Elorrio
-		return str.toString();
+		
+	    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	    externalContext.redirect(str.toString());
 	}
-	
-	
 
 }

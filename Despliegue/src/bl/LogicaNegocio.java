@@ -61,5 +61,16 @@ public class LogicaNegocio implements Serializable {
 		}
 		return check;
 	}
+
+	public void pruebaGoogleApi(){
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 	
 }
