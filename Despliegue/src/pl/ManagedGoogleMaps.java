@@ -4,6 +4,7 @@ package pl;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -13,6 +14,7 @@ import javax.inject.Named;
 
 import bl.LogicaNegocio;
 import dl.GoogleMaps;
+import dl.Moto;
 
 @Named
 @SessionScoped //Es de Session ya que no hay un botton que envie el formulario 
@@ -32,10 +34,6 @@ public class ManagedGoogleMaps implements Serializable{
 	public void setDireccion(String direccion) {
 		mapa.setDireccion(direccion);
 	}
-
-	
-	
-	
 	public void redirect() throws IOException {
 	    
 		StringBuilder str= new StringBuilder();
@@ -48,6 +46,9 @@ public class ManagedGoogleMaps implements Serializable{
 	    externalContext.redirect(str.toString());
 	}
 
-	
+	public void calculaDistancias(){
+		
+		logica.calculoDistancia(mapa.getDireccion());
+	}
 	
 }

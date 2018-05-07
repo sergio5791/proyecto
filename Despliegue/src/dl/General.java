@@ -1,17 +1,20 @@
 package dl;
 
 public class General {
-	
-    String text;
-    int value;
 
-@Override
-    public String toString() {
-        return "duration{" + "text=" + text + ", value=" + value + '}';
-    }
+	String text;
+	int value;
 
-public void mostrar (){
-	System.out.println("valor-> "+value);
-}
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	public void mostrar() {
+		System.out.println("valor-> " + value);
+	}
 
 }

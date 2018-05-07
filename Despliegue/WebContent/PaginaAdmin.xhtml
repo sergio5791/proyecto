@@ -5,6 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"> 
 
 <h:head>
+<h:outputStylesheet library="css" name="Estilo.css"></h:outputStylesheet>
+
 
 </h:head> 
 <h:body> 
@@ -12,7 +14,7 @@
 
 
 <h:form>
-<h:dataTable value="#{managedMotos.listaMotos}" var="auxiliar" border="2">
+<h:dataTable value="#{managedMotos.listaMotos}" var="auxiliar" border="1" styleClass="table">
 <h:column>
 <f:facet name="header">Id</f:facet>
 <h:outputText value="#{auxiliar.idMotos}" />

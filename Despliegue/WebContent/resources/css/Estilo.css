@@ -17,8 +17,8 @@ body {
 
 form {
 	
-	margin: 0 auto;
-	width: 200px;
+	margin:  20 px;
+	width:  200 px;
 	/* Para ver el borde del formulario */
 	padding: 1em;
 	border: 1px solid #CCC;

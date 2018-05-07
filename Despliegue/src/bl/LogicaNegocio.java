@@ -67,25 +67,28 @@ public class LogicaNegocio implements Serializable {
 		return check;
 	}
 
-	public void googleApi(String direccion) {
+	public int googleApi(String direccionOrigen,String direccionDestino) {
 
 		//La direccion tiene un formato calle+Nombre
 		URL url;
+		int distancia=0;
+		
 		try {
 			url = new URL(
-					"https://maps.googleapis.com/maps/api/distancematrix/json?origins=direccion,+Bilbao&destinations=Calle+Autonomia,+Bilbao&mode=walking&language=es-ES&key=AIzaSyCihVMBwuZD-84fDMK-_Y8nFuXVBg7DHNQ");
+					"https://maps.googleapis.com/maps/api/distancematrix/json?origins="+direccionOrigen+",+Bilbao&destinations="+direccionDestino+",+Bilbao&mode=walking&language=es-ES&key=AIzaSyCihVMBwuZD-84fDMK-_Y8nFuXVBg7DHNQ");
 			InputStreamReader reader = new InputStreamReader(url.openStream());
 
 			Cuerpo sr = (Cuerpo) new Gson().fromJson(reader, Cuerpo.class);
 
 			System.out.println("destination: " + sr.destination_addresses.get(0));
 			System.out.println("origins: " + sr.origin_addresses.get(0));
-			sr.rows.get(0).elements.get(0).getDistance().mostrar();
+			distancia=sr.rows.get(0).elements.get(0).getDistance().getValue();
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return distancia;
 
 	}
 
@@ -118,10 +121,22 @@ public class LogicaNegocio implements Serializable {
 		return lista;
 	}
 
-	public void calculoDistancia(String direccion){
+	public int[] calculoDistancia(String direccion){
 		
+		List<Moto> lista;
+		int i,distanciaMinima;
+		POJOCalculaMinDistancia calculo= new POJOCalculaMinDistancia();
+		int listaDistancias[]=new int[getListaMotos().size()] ;
 		
-		
+		lista=getListaMotos();
+		for(i=0;i< lista.size();i++){
+			listaDistancias[i]=googleApi(direccion.replace(" ","_"),lista.get(i).getDireccion().replace(" ","_"));
+			System.out.println(listaDistancias[i]);
+			
+		}
+		distanciaMinima=calculo.minDistancia(listaDistancias);
+		System.out.println("La distancia minima es-> "+distanciaMinima);
+		return listaDistancias;
 	}
 
 
