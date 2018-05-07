@@ -1,5 +1,7 @@
 package pl;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -22,28 +24,36 @@ public class ManagedMotos {
 	public void setIdMotos(int idMotos) {
 		moto.setIdMotos(idMotos);
 	}
-
-	public String getLatitud() {
-		return moto.getLatitud();
+	public String getDireccion() {
+		return moto.getDireccion();
 	}
 
-	public void setLatitud(String latitud) {
-		moto.setLatitud(latitud);
+	public void setDireccion(String direccion) {
+		moto.setDireccion(direccion);
 	}
 
-	public String getLongitud() {
-		return moto.getLongitud();
+	public boolean getDisponibilidad() {
+		return moto.getDisponibilidad();
 	}
 
-	public void setLongitud(String longitud) {
-		moto.setLongitud(longitud);
+	public void setDisponibilidad(boolean disponibilidad) {
+		moto.setDisponibilidad(disponibilidad);
 	}
-	
+
 	public void addMoto(){
 		logica.addMoto(moto);
 
 	}
 	
+	public void deleteMoto(int idMoto){
+		
+		logica.deleteMoto(idMoto);
+	}
+	
+	public List<Moto> getListaMotos(){
+		
+		return logica.getListaMotos();
+	}
 	
 	
 	

@@ -15,15 +15,10 @@
 <h:form>
 
 <h:outputText value="Introduce la longitud" />
-<h:inputText value="#{managedGoogleMaps.longitud}" />
+<h:inputText value="#{managedGoogleMaps.direccion}" />
 <br/>
 <br/>
 
-<h:outputText value="Introduce la latitud" />
-<h:inputText value="#{managedGoogleMaps.latitud}" />
-
-<br/>
-<br/>
 <h:commandButton action="#{managedGoogleMaps.redirect()}" value="Enviar" />
 <h:commandButton type="reset" value="Reset" />
 </h:form>

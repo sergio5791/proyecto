@@ -10,16 +10,36 @@
 <h:body> 
 <h1>Pagina del administrador</h1>
 
-<h:form>
 
-<h:dataTable value="#{managedMotos}" var="auxiliar"> 
+<h:form>
+<h:dataTable value="#{managedMotos.listaMotos}" var="auxiliar" border="2">
 <h:column>
-<f:facet name="header">Latitud</f:facet>
-<h:inputText value="#{auxiliar.latitud}" />
+<f:facet name="header">Id</f:facet>
+<h:outputText value="#{auxiliar.idMotos}" />
 </h:column>
 <h:column>
-<f:facet name="header">Longitud</f:facet>
-<h:inputText value="#{auxiliar.longitud}" />
+<f:facet name="header">Direccion</f:facet>
+<h:outputText value="#{auxiliar.direccion}" />
+</h:column>
+<h:column>
+<f:facet name="header">Estado</f:facet>
+<h:outputText value="#{auxiliar.disponibilidad}" />
+</h:column>
+<h:column>
+<f:facet name="header">Accion</f:facet>
+<h:commandButton action="#{managedMotos.deleteMoto(auxiliar.idMotos)}" value="Eliminar" />
+</h:column>
+</h:dataTable>
+</h:form>
+
+<br />
+<br />
+<h:form>
+
+<h:dataTable value="#{managedMotos}" var="auxiliar" border="2"> 
+<h:column>
+<f:facet name="header">Direccion</f:facet>
+<h:inputText value="#{auxiliar.direccion}" />
 </h:column>
 <h:column>
 <f:facet name="header">Accion</f:facet>

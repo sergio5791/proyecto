@@ -10,7 +10,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Motos")
-@NamedQuery(name="Moto.findAll", query="SELECT m FROM Moto m")
+@NamedQueries({
+@NamedQuery(name="Moto.findAll", query="SELECT m FROM Moto m"),
+@NamedQuery(name="Moto.findID", query="SELECT m FROM Moto m WHERE m.idMotos= :id")
+})
 public class Moto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -18,9 +21,9 @@ public class Moto implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idMotos;
 
-	private String latitud;
+	private String direccion;
 
-	private String longitud;
+	private boolean disponibilidad;
 
 	public Moto() {
 	}
@@ -33,20 +36,20 @@ public class Moto implements Serializable {
 		this.idMotos = idMotos;
 	}
 
-	public String getLatitud() {
-		return this.latitud;
+	public String getDireccion() {
+		return this.direccion;
 	}
 
-	public void setLatitud(String latitud) {
-		this.latitud = latitud;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 
-	public String getLongitud() {
-		return this.longitud;
+	public boolean getDisponibilidad() {
+		return this.disponibilidad;
 	}
 
-	public void setLongitud(String longitud) {
-		this.longitud = longitud;
+	public void setDisponibilidad(boolean disponibilidad) {
+		this.disponibilidad = disponibilidad;
 	}
 
 }

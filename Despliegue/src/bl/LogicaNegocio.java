@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
-import org.json.JSONException;
 
 import com.google.gson.Gson;
 
@@ -68,36 +67,62 @@ public class LogicaNegocio implements Serializable {
 		return check;
 	}
 
-	public void pruebaGoogleApi() throws JSONException {
+	public void googleApi(String direccion) {
 
-        URL url;
+		//La direccion tiene un formato calle+Nombre
+		URL url;
 		try {
-			url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=AIzaSyCihVMBwuZD-84fDMK-_Y8nFuXVBg7DHNQ");
-	        InputStreamReader reader = new InputStreamReader(url.openStream());
-	        
+			url = new URL(
+					"https://maps.googleapis.com/maps/api/distancematrix/json?origins=direccion,+Bilbao&destinations=Calle+Autonomia,+Bilbao&mode=walking&language=es-ES&key=AIzaSyCihVMBwuZD-84fDMK-_Y8nFuXVBg7DHNQ");
+			InputStreamReader reader = new InputStreamReader(url.openStream());
+
 			Cuerpo sr = (Cuerpo) new Gson().fromJson(reader, Cuerpo.class);
 
-	        System.out.println("destination: " + sr.destination_addresses.get(0));
-	        System.out.println("origins: " + sr.origin_addresses.get(0));
-	       sr.rows.get(0).elements.get(0).getDistance().mostrar();
-	        
+			System.out.println("destination: " + sr.destination_addresses.get(0));
+			System.out.println("origins: " + sr.origin_addresses.get(0));
+			sr.rows.get(0).elements.get(0).getDistance().mostrar();
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-
-
 	}
 
 	public void addMoto(Moto moto) {
-		try {
-			pruebaGoogleApi();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		em.persist(moto);
 	}
+
+	public void deleteMoto(int idMoto){
+		
+		Moto moto;
+		try{
+		moto=em.find(Moto.class, idMoto);
+		em.remove(moto);
+		}catch(Exception ex){
+			System.out.println("No hay una moto con se ID");
+			
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Moto> getListaMotos(){
+		
+		List<Moto> lista;
+		
+		lista=em.createNamedQuery("Moto.findAll").getResultList();
+		
+		
+		
+		return lista;
+	}
+
+	public void calculoDistancia(String direccion){
+		
+		
+		
+	}
+
 
 }
