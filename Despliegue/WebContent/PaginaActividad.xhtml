@@ -14,12 +14,15 @@
 
 <h:form>
 
-<h:outputText value="Introduce la longitud" />
-<h:inputText value="#{managedGoogleMaps.direccion}" />
+<h:outputText value="Introduce el correo" />
+<h:inputText value="#{managedUsuario.correo}" />
 <br/>
+<br/>
+<h:outputText value="Introduce la direccion" />
+<h:inputText value="#{managedUsuario.direccion}" />
 <br/>
 
-<h:commandButton action="#{managedGoogleMaps.calculaDistancias()}" value="Enviar" />
+<h:commandButton action="#{managedUsuario.calculaDistancias()}" value="Enviar" />
 <h:commandButton type="reset" value="Reset" />
 </h:form>
 

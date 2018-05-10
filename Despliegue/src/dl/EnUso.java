@@ -5,17 +5,19 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the Using database table.
+ * The persistent class for the EnUso database table.
  * 
  */
 @Entity
-@NamedQuery(name="Using.findAll", query="SELECT u FROM Using u")
-public class Using implements Serializable {
+@NamedQueries({
+@NamedQuery(name="EnUso.findAll", query="SELECT e FROM EnUso e")
+})
+public class EnUso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idUsing;
+	private int idEnUso;
 
 	//uni-directional many-to-one association to Moto
 	@ManyToOne
@@ -27,15 +29,15 @@ public class Using implements Serializable {
 	@JoinColumn(name="Usuarios_idUsuarios")
 	private Usuario usuario;
 
-	public Using() {
+	public EnUso() {
 	}
 
-	public int getIdUsing() {
-		return this.idUsing;
+	public int getIdEnUso() {
+		return this.idEnUso;
 	}
 
-	public void setIdUsing(int idUsing) {
-		this.idUsing = idUsing;
+	public void setIdEnUso(int idEnUso) {
+		this.idEnUso = idEnUso;
 	}
 
 	public Moto getMoto() {

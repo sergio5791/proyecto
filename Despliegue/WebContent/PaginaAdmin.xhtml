@@ -12,7 +12,9 @@
 <h:body> 
 <h1>Pagina del administrador</h1>
 
+<h2>Motos Totales</h2>
 
+<!-- Lista las motos totales -->
 <h:form>
 <h:dataTable value="#{managedMotos.listaMotos}" var="auxiliar" border="1" styleClass="table">
 <h:column>
@@ -36,8 +38,9 @@
 
 <br />
 <br />
+<!--Añade moto-->
+<h2>Nueva Moto</h2>
 <h:form>
-
 <h:dataTable value="#{managedMotos}" var="auxiliar" border="2"> 
 <h:column>
 <f:facet name="header">Direccion</f:facet>
@@ -47,11 +50,37 @@
 <f:facet name="header">Accion</f:facet>
 <h:commandButton action="#{managedMotos.addMoto()}" value="Enviar" />
 </h:column>
-
-
 </h:dataTable>
-
 </h:form>
+
+<h2>Motos en Uso</h2>
+
+<h:dataTable value="#{managedMotosUso.listaMotosUso}" var="auxiliar" border="2" styleClass="table">
+<h:column>
+<f:facet name="header">Usuario</f:facet>
+<h:outputText value="#{auxiliar.usuario.nombre}" />
+</h:column>
+<h:column>
+<f:facet name="header">Moto</f:facet>
+<h:outputText value="#{auxiliar.moto.idMotos}" />
+</h:column>
+</h:dataTable> 
+<br />
+<h2>Dar de baja una moto en uso</h2>
+
+<h:form>
+<h:dataTable value="#{managedMotosUso.listaMotosUso}" var="auxiliar">
+<h:column>
+<f:facet name="header">Identificador</f:facet>
+<h:outputLabel value="#{auxiliar.moto.idMotos}"></h:outputLabel>
+</h:column>
+<h:column>
+<f:facet name="header">Accion</f:facet>
+<h:commandButton action="#{managedMotosUso.deleteMotoUso(auxiliar.idEnUso)}" value="Eliminar" />
+</h:column>
+</h:dataTable>
+</h:form>
+
 
 </h:body> 
 </html>

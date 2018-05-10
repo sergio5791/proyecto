@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name="Motos")
 @NamedQueries({
 @NamedQuery(name="Moto.findAll", query="SELECT m FROM Moto m"),
-@NamedQuery(name="Moto.findID", query="SELECT m FROM Moto m WHERE m.idMotos= :id")
+@NamedQuery(name="Moto.false", query="SELECT m FROM Moto m WHERE m.disponibilidad = FALSE")
 })
 public class Moto implements Serializable {
 	private static final long serialVersionUID = 1L;

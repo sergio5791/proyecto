@@ -1,13 +1,16 @@
 package pl;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import bl.LogicaNegocio;
-import dl.Using;
 import dl.Usuario;
 
 @Named
@@ -18,14 +21,22 @@ public class ManagedUsuario implements Serializable {
 	@EJB
 	private LogicaNegocio logica;
 	Usuario cliente = new Usuario();
+	private String direccion;
 	
 	//private boolean checkInsert = false;
 
+	public String getDireccion() {
+		return direccion;
+	}
 
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
 
-	public void add() {
+	public String add() {
 			logica.anadirUsuario(cliente);
 			//this.checkInsert = true;
+			return "PaginaActividad";
 	}
 	
 	public String checkExistUser(){
@@ -81,7 +92,21 @@ public class ManagedUsuario implements Serializable {
 	public void setNombre(String nombre) {
 		cliente.setNombre(nombre);
 	}
-
+	public void calculaDistancias() throws IOException{
+		
+		String direccionDestino;
+		
+		direccionDestino=logica.calculoDistancia(direccion,cliente.getCorreo());
+		
+		StringBuilder str= new StringBuilder();
+		str.append("http://maps.google.com/maps?saddr=");
+		str.append(direccion.replace(" ","_"));
+		str.append("&daddr=");
+		str.append(direccionDestino);//LA direccion que va con numero es Elorrio
+		
+	    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	    externalContext.redirect(str.toString());
+	}
 	
 
 }

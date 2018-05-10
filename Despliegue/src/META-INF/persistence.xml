@@ -3,7 +3,6 @@
 	<persistence-unit name="TAP">
 		<jta-data-source>java:jboss/datasources/MotoTaxi</jta-data-source>
 		<class>dl.Moto</class>
-		<class>dl.Using</class>
 		<class>dl.Usuario</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>

@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.List;
 
 import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -15,10 +16,11 @@ import javax.persistence.PersistenceContext;
 import com.google.gson.Gson;
 
 import dl.Cuerpo;
+import dl.EnUso;
 import dl.Moto;
 import dl.Usuario;
 
-@Stateless
+@Stateful
 @LocalBean
 public class LogicaNegocio implements Serializable {
 
@@ -112,32 +114,77 @@ public class LogicaNegocio implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Moto> getListaMotos(){
 		
-		List<Moto> lista;
-		
+		List<Moto> lista=null;
+		try{
 		lista=em.createNamedQuery("Moto.findAll").getResultList();
-		
+		}catch(Exception ex){
+			System.out.println("No hay motos en la base de datos");
+		}
 		
 		
 		return lista;
 	}
 
-	public int[] calculoDistancia(String direccion){
+	public String calculoDistancia(String direccion,String correo){
 		
 		List<Moto> lista;
-		int i,distanciaMinima;
+		int i,posicionMotoCercana;
+		EnUso disponible= new EnUso();
+		Moto moto;
+		Usuario user;
 		POJOCalculaMinDistancia calculo= new POJOCalculaMinDistancia();
-		int listaDistancias[]=new int[getListaMotos().size()] ;
+		int listaDistancias[]=new int[getMotosFalse().size()] ;
 		
-		lista=getListaMotos();
+		lista=getMotosFalse();
 		for(i=0;i< lista.size();i++){
 			listaDistancias[i]=googleApi(direccion.replace(" ","_"),lista.get(i).getDireccion().replace(" ","_"));
 			System.out.println(listaDistancias[i]);
 			
 		}
-		distanciaMinima=calculo.minDistancia(listaDistancias);
-		System.out.println("La distancia minima es-> "+distanciaMinima);
-		return listaDistancias;
+		posicionMotoCercana=calculo.minDistancia(listaDistancias);
+		//System.out.println("La distancia minima es-> "+posicionMotoCercana);
+		
+		moto=em.find(Moto.class, lista.get(posicionMotoCercana).getIdMotos());
+		user=(Usuario) em.createNamedQuery("Usuario.Correo").setParameter("mail", correo).getSingleResult();
+		disponible.setUsuario(user);
+		disponible.setMoto(moto);
+		em.persist(disponible);
+		moto.setDisponibilidad(true);
+		em.persist(moto);	
+		
+		return lista.get(posicionMotoCercana).getDireccion().replace(" ","_");
+
 	}
 
 
+	@SuppressWarnings("unchecked")
+	public List<EnUso> getListaMotosUso(){
+		
+		return em.createNamedQuery("EnUso.findAll").getResultList();
+		
+			
+	}
+	
+	public void deleteMotoEnUso(int id){
+		
+		EnUso auxiliar;
+		int idMoto;
+		Moto moto;
+		
+		auxiliar=em.find(EnUso.class, id);
+		idMoto=auxiliar.getMoto().getIdMotos();
+		moto=em.find(Moto.class, idMoto);
+		moto.setDisponibilidad(false);
+		em.persist(moto);
+		em.remove(auxiliar);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Moto> getMotosFalse(){
+		
+		System.out.println("Casca en la peticion");
+		return em.createNamedQuery("Moto.false").getResultList();
+		
+	}
+	
 }
