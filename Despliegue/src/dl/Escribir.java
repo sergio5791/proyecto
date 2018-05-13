@@ -2,6 +2,6 @@ package dl;
 
 public interface Escribir {
 
-	public void EscribirFichero (Usuario user);
+	public void EscribirFichero (ErrorMoto error);
 	
 }

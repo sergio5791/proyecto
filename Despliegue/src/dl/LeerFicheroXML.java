@@ -9,17 +9,17 @@ import javax.xml.bind.Unmarshaller;
 public class LeerFicheroXML implements LeerFichero {
 
 	@Override
-	public ListaUsuarios leer() {
+	public ListaErrores leer() {
 
-		File fichero = new File("/home/sergio/Escritorio/ListaUsuarios.xml");
-		ListaUsuarios lista = new ListaUsuarios();
-
+		File fichero = new File("/home/sergio/Escritorio/ListaErrores.xml");
+		ListaErrores lista = new ListaErrores();
+		
 		JAXBContext contexto;
 		if (fichero.exists()) {
 			try {
-				contexto = JAXBContext.newInstance(ListaUsuarios.class);
+				contexto = JAXBContext.newInstance(ListaErrores.class);
 				Unmarshaller unmarshaller = contexto.createUnmarshaller();
-				lista = (ListaUsuarios) unmarshaller.unmarshal(fichero);
+				lista = (ListaErrores) unmarshaller.unmarshal(fichero);
 			} catch (JAXBException e) {
 
 				e.printStackTrace();

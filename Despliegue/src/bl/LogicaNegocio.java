@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -17,10 +18,12 @@ import com.google.gson.Gson;
 
 import dl.Cuerpo;
 import dl.EnUso;
+import dl.ErrorMoto;
+import dl.EscribirXML;
 import dl.Moto;
 import dl.Usuario;
 
-@Stateful
+@Stateless
 @LocalBean
 public class LogicaNegocio implements Serializable {
 
@@ -125,24 +128,27 @@ public class LogicaNegocio implements Serializable {
 		return lista;
 	}
 
+	@SuppressWarnings("deprecation")
 	public String calculoDistancia(String direccion,String correo){
 		
-		List<Moto> lista;
-		int i,posicionMotoCercana;
+		List<Moto> lista=null;
+		int i=0,posicionMotoCercana=0;
 		EnUso disponible= new EnUso();
-		Moto moto;
-		Usuario user;
+		Moto moto=null;
+		Date fecha=new Date();
+		Usuario user=null;
+		ErrorMoto errorMoto = null;
+		String motoMasCercana=null;
 		POJOCalculaMinDistancia calculo= new POJOCalculaMinDistancia();
-		int listaDistancias[]=new int[getMotosFalse().size()] ;
+		int listaDistancias[]=new int[getMotosFalse().size()];
 		
 		lista=getMotosFalse();
+		if(lista.size()!=0){
 		for(i=0;i< lista.size();i++){
 			listaDistancias[i]=googleApi(direccion.replace(" ","_"),lista.get(i).getDireccion().replace(" ","_"));
-			System.out.println(listaDistancias[i]);
-			
+			//System.out.println(listaDistancias[i]);		
 		}
 		posicionMotoCercana=calculo.minDistancia(listaDistancias);
-		//System.out.println("La distancia minima es-> "+posicionMotoCercana);
 		
 		moto=em.find(Moto.class, lista.get(posicionMotoCercana).getIdMotos());
 		user=(Usuario) em.createNamedQuery("Usuario.Correo").setParameter("mail", correo).getSingleResult();
@@ -150,9 +156,18 @@ public class LogicaNegocio implements Serializable {
 		disponible.setMoto(moto);
 		em.persist(disponible);
 		moto.setDisponibilidad(true);
-		em.persist(moto);	
+		em.persist(moto);
 		
-		return lista.get(posicionMotoCercana).getDireccion().replace(" ","_");
+		motoMasCercana=lista.get(posicionMotoCercana).getDireccion(); //Se asigna la direccion de la moto mas cercana 
+		}else{
+			errorMoto=new ErrorMoto();
+			errorMoto.setDireccion(direccion);
+			errorMoto.setFecha(fecha.toString());
+			EscribirXML escribir= new EscribirXML();
+			escribir.EscribirFichero(errorMoto);
+	
+		}
+		return motoMasCercana;
 
 	}
 
@@ -182,7 +197,6 @@ public class LogicaNegocio implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Moto> getMotosFalse(){
 		
-		System.out.println("Casca en la peticion");
 		return em.createNamedQuery("Moto.false").getResultList();
 		
 	}

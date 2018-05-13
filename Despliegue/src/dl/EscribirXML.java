@@ -9,22 +9,22 @@ import javax.xml.bind.Marshaller;
 public class EscribirXML implements Escribir{
 
 	@Override
-	public void EscribirFichero(Usuario user) {
+	public void EscribirFichero(ErrorMoto error) {
 		
 		
-		File fichero= new File("/home/sergio/Escritorio/ListaUsuarios.xml");
-		ListaUsuarios lista = new ListaUsuarios();
+		File fichero= new File("/home/sergio/Escritorio/ListaErrores.xml");
+		ListaErrores lista = new ListaErrores();
 		LeerFicheroXML leer= new LeerFicheroXML();
 		
 		if(fichero.exists()){		
 			lista.setLista(leer.leer().getLista());
 		}
-		lista.getLista().add(user);
+		lista.getLista().add(error);
 		
 		JAXBContext contexto;
-		System.out.println("Escribe el XMl");
+
 		try {
-			contexto = JAXBContext.newInstance(ListaUsuarios.class);
+			contexto = JAXBContext.newInstance(ListaErrores.class);
 			Marshaller marshaller=contexto.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			marshaller.marshal(lista,fichero);

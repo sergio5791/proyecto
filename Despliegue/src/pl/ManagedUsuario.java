@@ -97,15 +97,19 @@ public class ManagedUsuario implements Serializable {
 		String direccionDestino;
 		
 		direccionDestino=logica.calculoDistancia(direccion,cliente.getCorreo());
-		
+
+		if(direccionDestino!=null){
 		StringBuilder str= new StringBuilder();
 		str.append("http://maps.google.com/maps?saddr=");
-		str.append(direccion.replace(" ","_"));
+		str.append(direccion+",Bilbao");
 		str.append("&daddr=");
-		str.append(direccionDestino);//LA direccion que va con numero es Elorrio
+		str.append(direccionDestino+",Bilbao");//LA direccion que va con numero es Elorrio
 		
 	    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 	    externalContext.redirect(str.toString());
+		}else{
+			System.out.println("No hay motos disponibles");
+		}
 	}
 	
 
