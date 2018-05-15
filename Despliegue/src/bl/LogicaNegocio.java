@@ -34,21 +34,23 @@ public class LogicaNegocio implements Serializable {
 	@PersistenceContext
 	private EntityManager em;
 
-	public void anadirUsuario(Usuario user) {
+	public boolean anadirUsuario(Usuario user) {
 
 		Usuario usuario;
-
+		boolean existeCorreo=false;
+		
 		try {
 			usuario = (Usuario) em.createNamedQuery("Usuario.Correo").setParameter("mail", user.getCorreo())
 					.getSingleResult();
 			if (usuario.getCorreo().equals(user.getCorreo()))
 				System.out.println("Ya hay un correo identico");
-
+			existeCorreo=true;
 		} catch (NoResultException ex) {
 			em.persist(user);
 			System.out.println("Se introduce el usuario");
 		}
 
+		return existeCorreo;
 	}
 
 	public void eliminarUsuario(Usuario user) {

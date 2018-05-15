@@ -56,7 +56,12 @@
 		<h:commandButton type="reset" value="Reset" />
 
 	</h:form>
-	
+	<h:panelGroup rendered="#{managedUsuario.correoMalEscrito}">
+	<h2>El formato del correo es incorrecto</h2>
+	</h:panelGroup>
+		<h:panelGroup rendered="#{managedUsuario.correorepetido}">
+	<h2>Ese correo ya existe en el sistema</h2>
+	</h:panelGroup>
 	
 </h:body>
 

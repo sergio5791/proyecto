@@ -2,6 +2,8 @@ package pl;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -22,6 +24,9 @@ public class ManagedUsuario implements Serializable {
 	private LogicaNegocio logica;
 	Usuario cliente = new Usuario();
 	private String direccion;
+	private boolean correorepetido=false;
+	private boolean correoMalEscrito=false;
+	private boolean noMoto=false;
 	
 	//private boolean checkInsert = false;
 
@@ -34,9 +39,23 @@ public class ManagedUsuario implements Serializable {
 	}
 
 	public String add() {
-			logica.anadirUsuario(cliente);
-			//this.checkInsert = true;
-			return "PaginaActividad";
+		
+		String paginaActividad=null;
+		 Pattern pattern = Pattern
+	                .compile("^[^@]+@[^@]+\\.[a-zA-Z]{2,}$");
+	        Matcher mather = pattern.matcher(cliente.getCorreo());
+	 
+	        if (mather.find() == true) {
+	            System.out.println("El email ingresado es válido.");
+	            this.correorepetido=logica.anadirUsuario(cliente);
+	        } else {
+	            System.out.println("El email ingresado es inválido.");
+	            this.correoMalEscrito=true;
+	        }		
+			if(this.correoMalEscrito==false && this.correorepetido==false){
+				paginaActividad="PaginaActividad";
+			}
+			return paginaActividad;
 	}
 	
 	public String checkExistUser(){
@@ -109,8 +128,35 @@ public class ManagedUsuario implements Serializable {
 	    externalContext.redirect(str.toString());
 		}else{
 			System.out.println("No hay motos disponibles");
+			this.noMoto=true;
 		}
 	}
+
+	
+	public boolean isCorreorepetido() {
+		return correorepetido;
+	}
+
+	public void setCorreorepetido(boolean correorepetido) {
+		this.correorepetido = correorepetido;
+	}
+
+	public boolean isCorreoMalEscrito() {
+		return correoMalEscrito;
+	}
+
+	public void setCorreoMalEscrito(boolean correoMalEscrito) {
+		this.correoMalEscrito = correoMalEscrito;
+	}
+
+	public boolean isNoMoto() {
+		return noMoto;
+	}
+
+	public void setNoMoto(boolean noMoto) {
+		this.noMoto = noMoto;
+	}
+	
 	
 
 }
