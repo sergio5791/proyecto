@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
@@ -34,6 +36,7 @@ public class LogicaNegocio implements Serializable {
 	@PersistenceContext
 	private EntityManager em;
 
+	@PermitAll
 	public boolean anadirUsuario(Usuario user) {
 
 		Usuario usuario;
@@ -58,7 +61,7 @@ public class LogicaNegocio implements Serializable {
 		// Si se quiere para ponerlo en una pagina de administrador
 
 	}
-
+	@PermitAll
 	public boolean checkUser(Usuario user) {
 
 		Usuario usuario;
@@ -74,6 +77,7 @@ public class LogicaNegocio implements Serializable {
 		return check;
 	}
 
+	@RolesAllowed("admin")
 	public int googleApi(String direccionOrigen,String direccionDestino) {
 
 		//La direccion tiene un formato calle+Nombre
@@ -99,11 +103,13 @@ public class LogicaNegocio implements Serializable {
 
 	}
 
+	@RolesAllowed("admin")
 	public void addMoto(Moto moto) {
 
 		em.persist(moto);
 	}
 
+	@RolesAllowed("admin")
 	public void deleteMoto(int idMoto){
 		
 		Moto moto;
@@ -116,6 +122,7 @@ public class LogicaNegocio implements Serializable {
 		}
 	}
 
+	@RolesAllowed("admin")
 	@SuppressWarnings("unchecked")
 	public List<Moto> getListaMotos(){
 		
@@ -130,6 +137,7 @@ public class LogicaNegocio implements Serializable {
 		return lista;
 	}
 
+	@PermitAll
 	@SuppressWarnings("deprecation")
 	public String calculoDistancia(String direccion,String correo){
 		
@@ -174,6 +182,7 @@ public class LogicaNegocio implements Serializable {
 	}
 
 
+	@RolesAllowed("admin")
 	@SuppressWarnings("unchecked")
 	public List<EnUso> getListaMotosUso(){
 		
@@ -182,6 +191,7 @@ public class LogicaNegocio implements Serializable {
 			
 	}
 	
+	@RolesAllowed("admin")
 	public void deleteMotoEnUso(int id){
 		
 		EnUso auxiliar;
@@ -196,6 +206,7 @@ public class LogicaNegocio implements Serializable {
 		em.remove(auxiliar);
 	}
 	
+	@RolesAllowed("admin")
 	@SuppressWarnings("unchecked")
 	public List<Moto> getMotosFalse(){
 		
